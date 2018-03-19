@@ -48,15 +48,36 @@ function checkEmail(str) {
     }
 }
 
-var validate = function (form) {
-    var isValid = checkString(form.elements["f_imie"].value, "Podaj imię!")
-            && checkString(form.elements["f_nazwisko"].value, "Podaj nazwisko!")
-            && checkString(form.elements["f_kod"].value, "Podaj kod!")
-            && checkString(form.elements["f_ulica"].value, "Podaj ulicę!")
-            && checkString(form.elements["f_miasto"].value, "Podaj miasto!")
-            && checkEmail(form.elements["f_email"].value);
-    return isValid;
-};
+function checkEmailAndFocus(obj) {
+    var str = obj.value;
+    var errorFieldName = "e_" + obj.name.substr(2, obj.name.length);
+    if (isWhiteSpace(str)) {
+        document.getElementById(errorFieldName).innerHTML = "Podaj właściwy e-mail";
+        obj.focus();
+        return false;
+    } else {
+        var at = str.indexOf("@");
+        if (at < 1) {
+            document.getElementById(errorFieldName).innerHTML = "Nieprawidłowy e-mail";
+            obj.focus();
+            return false;
+        } else {
+            var l = -1;
+            for (var i = 0; i < str.length; i++) {
+                var c = str.charAt(i);
+                if (c == ".") {
+                    l = i;
+                }
+            }
+            if ((l < (at + 2)) || (l == str.length - 1)) {
+                document.getElementById(errorFieldName).innerHTML = "Nieprawidłowy e-mail";
+                obj.focus();
+                return false;
+            }
+        }
+        return true;
+    }
+}
 
 function checkStringAndFocus(obj, msg) {
     var str = obj.value;
@@ -69,3 +90,13 @@ function checkStringAndFocus(obj, msg) {
         return true;
     }
 }
+
+var validate = function (form) {
+    var isValid = checkStringAndFocus(form.elements["f_imie"], "Podaj imię!")
+            && checkStringAndFocus(form.elements["f_nazwisko"], "Podaj nazwisko!")
+            && checkStringAndFocus(form.elements["f_kod"], "Podaj kod!")
+            && checkStringAndFocus(form.elements["f_ulica"], "Podaj ulicę!")
+            && checkStringAndFocus(form.elements["f_miasto"], "Podaj miasto!")
+            && checkEmailAndFocus(form.elements["f_email"]);
+    return isValid;
+};
