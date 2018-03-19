@@ -54,12 +54,14 @@ function checkEmailAndFocus(obj) {
     if (isWhiteSpace(str)) {
         document.getElementById(errorFieldName).innerHTML = "Podaj właściwy e-mail";
         obj.focus();
+        startTimer(errorFieldName);
         return false;
     } else {
         var at = str.indexOf("@");
         if (at < 1) {
             document.getElementById(errorFieldName).innerHTML = "Nieprawidłowy e-mail";
             obj.focus();
+            startTimer(errorFieldName);
             return false;
         } else {
             var l = -1;
@@ -72,6 +74,7 @@ function checkEmailAndFocus(obj) {
             if ((l < (at + 2)) || (l == str.length - 1)) {
                 document.getElementById(errorFieldName).innerHTML = "Nieprawidłowy e-mail";
                 obj.focus();
+                startTimer(errorFieldName);
                 return false;
             }
         }
@@ -85,6 +88,7 @@ function checkStringAndFocus(obj, msg) {
     if (isWhiteSpace(str) || isEmpty(str)) {
         document.getElementById(errorFieldName).innerHTML = msg;
         obj.focus();
+        startTimer(errorFieldName);
         return false;
     } else {
         return true;
@@ -100,3 +104,19 @@ var validate = function (form) {
             && checkEmailAndFocus(form.elements["f_email"]);
     return isValid;
 };
+
+var errorField = "";
+function startTimer(fName) {
+    errorField = fName; // it's not working when a new error msg is after less than 5s
+    window.setTimeout("clearError(errorField)", 5000);
+}
+function clearError(objName) {
+    document.getElementById(objName).innerHTML = "";
+}
+
+function showElement(e) {
+    document.getElementById(e).style.visibility = 'visible';
+}
+function hideElement(e) {    
+    document.getElementById(e).style.visibility = 'hidden';
+}
