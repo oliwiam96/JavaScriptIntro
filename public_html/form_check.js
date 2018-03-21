@@ -47,6 +47,30 @@ function checkEmail(str) {
         return true;
     }
 }
+function checkEmailRegEx(obj) {
+    var str = obj.value;
+    var email = /[a-zA-Z_0-9\.]+@[a-zA-Z_0-9\.]+\.[a-zA-Z][a-zA-Z]+/;
+    if (email.test(str))
+        return true;
+    else {
+        alert("Podaj właściwy e-mail");
+        return false;
+    }
+}
+
+function checkEmailRegExAndFocus(obj) {
+    var str = obj.value;
+    var errorFieldName = "e_" + obj.name.substr(2, obj.name.length);
+    var email = /[a-zA-Z_0-9\.]+@[a-zA-Z_0-9\.]+\.[a-zA-Z][a-zA-Z]+/;
+    if (email.test(str))
+        return true;
+    else {
+        document.getElementById(errorFieldName).innerHTML = "Nieprawidłowy e-mail";
+        obj.focus();
+        startTimer(errorFieldName);
+        return false;
+    }
+}
 
 function checkEmailAndFocus(obj) {
     var str = obj.value;
@@ -96,12 +120,14 @@ function checkStringAndFocus(obj, msg) {
 }
 
 var validate = function (form) {
-    var isValid = checkStringAndFocus(form.elements["f_imie"], "Podaj imię!")
+    var isValid = 
+            checkStringAndFocus(form.elements["f_imie"], "Podaj imię!")
             && checkStringAndFocus(form.elements["f_nazwisko"], "Podaj nazwisko!")
             && checkStringAndFocus(form.elements["f_kod"], "Podaj kod!")
             && checkStringAndFocus(form.elements["f_ulica"], "Podaj ulicę!")
             && checkStringAndFocus(form.elements["f_miasto"], "Podaj miasto!")
-            && checkEmailAndFocus(form.elements["f_email"]);
+            && checkEmailRegExAndFocus(form.elements["f_email"]);
+            //&& checkEmailAndFocus(form.elements["f_email"]);
     return isValid;
 };
 
@@ -117,6 +143,6 @@ function clearError(objName) {
 function showElement(e) {
     document.getElementById(e).style.visibility = 'visible';
 }
-function hideElement(e) {    
+function hideElement(e) {
     document.getElementById(e).style.visibility = 'hidden';
 }
