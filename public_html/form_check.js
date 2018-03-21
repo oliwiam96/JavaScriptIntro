@@ -159,8 +159,11 @@ var validate = function (form) {
     //&& checkEmailAndFocus(form.elements["f_email"]);
     if (!isValid) {
         allDOM = document.getElementsByTagName("input");
+
         for (var i = 0, max = allDOM.length; i < max; i++) {
-            allDOM[i].className = "wrong";
+            if (allDOM[i].type.toLowerCase() == 'text') {
+                allDOM[i].className = "wrong";
+            }
         }
 
     }
@@ -217,4 +220,11 @@ function swapRows(b) {
     tBody.removeChild(lastNode);
     var firstNode = nextNode(tBody.firstChild);
     tBody.insertBefore(lastNode, firstNode);
+}
+
+function cnt(form, msg, maxSize) {
+    if (form.value.length > maxSize)
+        form.value = form.value.substring(0, maxSize);
+    else
+        msg.innerHTML = maxSize - form.value.length;
 }
