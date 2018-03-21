@@ -24,10 +24,13 @@
                 <tr><td>N. panieńskie</td>
                     <td><span id="NazwiskoPanienskie"><input type="text" name="f_nazwisko_p"></span></td></tr>
                 <tr><td>E-mail</td><td><input type="text" name="f_email"><span class="err" id="e_email" /></td></tr>
-                <tr><td>Kod pocztowy</td><td><input type="text" name="f_kod">
+                <tr>
+                    <td>Kod pocztowy</td>
+                    <td><input type="text" name="f_kod" onkeyup="return checkZIPCodeRegEx(this.form.elements['f_kod'].value);">
                         <span class="err" id="e_kod" />
                         <span id="kod"/>
-                </td></tr>
+                    </td>
+                </tr>
                 <tr><td>Ulica/Osiedle</td><td><input type="text" name="f_ulica"><span class="err" id="e_ulica" /></td></tr>
                 <tr><td>Miasto</td><td><input type="text" name="f_miasto"><span class="err" id="e_miasto" /></td></tr>
                 <tr><td>Uwagi</td><td><textarea rows="5" cols="15" name="uwagi"></textarea>

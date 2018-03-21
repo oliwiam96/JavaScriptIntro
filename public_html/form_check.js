@@ -119,15 +119,30 @@ function checkStringAndFocus(obj, msg) {
     }
 }
 
+
+var checkZIPCodeRegEx = function (str) {
+    var zipCode = /^[0-9]{2}\-[0-9]{3}$/;
+    if (zipCode.test(str)){
+        document.getElementById("kod").innerHTML = "OK";
+        document.getElementById("kod").className = "green";
+        return false;
+    }
+    else {
+        document.getElementById("kod").innerHTML = "Źle";
+        document.getElementById("kod").className = "red";
+        return true;
+    }
+}
+
 var validate = function (form) {
-    var isValid = 
+    var isValid =
             checkStringAndFocus(form.elements["f_imie"], "Podaj imię!")
             && checkStringAndFocus(form.elements["f_nazwisko"], "Podaj nazwisko!")
             && checkStringAndFocus(form.elements["f_kod"], "Podaj kod!")
             && checkStringAndFocus(form.elements["f_ulica"], "Podaj ulicę!")
             && checkStringAndFocus(form.elements["f_miasto"], "Podaj miasto!")
             && checkEmailRegExAndFocus(form.elements["f_email"]);
-            //&& checkEmailAndFocus(form.elements["f_email"]);
+    //&& checkEmailAndFocus(form.elements["f_email"]);
     return isValid;
 };
 
