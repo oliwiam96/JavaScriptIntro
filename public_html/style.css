@@ -11,3 +11,8 @@
 .red{
     color:red;
 }
+
+.wrong{
+    border-color: red;
+    border-style: dashed;
+}
